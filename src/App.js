@@ -1,24 +1,35 @@
-import logo from './logo.svg';
+import React, { useReducer } from 'react';
 import './App.css';
+import ButtonGroup from './components/ButtonGroup';
+import Screen from './components/Screen';
+import { initialState, reducer } from './script/reducer';
+
+export const CalculatorContext = React.createContext();
 
 function App() {
+  const [calculator, dispatch] = useReducer(reducer, initialState);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CalculatorContext.Provider
+      value={{ state: calculator, calculatorDispatch: dispatch }}
+    >
+      <div className="App">
+        <div class="container">
+          <header>
+            <h1 class="title">calc</h1>
+          </header>
+          <main>
+            <div class="screen-display">
+              <Screen />
+            </div>
+            <div class="keypad">
+              <ButtonGroup />
+            </div>
+          </main>
+        </div>
+
+        <div className="container"></div>
+      </div>
+    </CalculatorContext.Provider>
   );
 }
 
